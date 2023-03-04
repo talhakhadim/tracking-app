@@ -12,10 +12,11 @@ const Tracking = sequelize.define('Tracking', {
         type: DataTypes.INTEGER,
     },
     lat:{
-        type: DataTypes.FLOAT,
+        //should be float and long float 
+        type: DataTypes.FLOAT(10,6)
     },
     long:{
-        type: DataTypes.FLOAT,
+        type: DataTypes.FLOAT(10,6)
     },
 });
 
