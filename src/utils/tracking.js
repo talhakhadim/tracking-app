@@ -11,7 +11,9 @@ module.exports = {
             const tracking = await TrackingModel.findOne({ where: { userId: data.userId } });
             //if exits update
             if(tracking){
-                trackingData=await TrackingModel.update(data, { where: { userId: data.userId } ,returning:true});
+               await TrackingModel.update({lat:data.lat,long:data.long},{where:{userId:data.userId}});
+                trackingData=await TrackingModel.findOne({where:{userId:data.userId}});
+               
             }else{
                 //if not create
                 trackingData= await TrackingModel.create(data);
