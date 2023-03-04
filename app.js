@@ -17,13 +17,16 @@ const io=new Server(httpServer,{
     }
 })
 app.use(express.json({ extended: false }));
-app.use(cors());
+app.use(cors({
+    origin:"*"
+}));
 //routes
 app.use('/user',userRoutes);
 //socket
 io.on('connection',(socket)=>{
     console.log("socket connected",socket.id);
     socket.on('locationUpdate',async(data)=>{
+        console.log(data)
         const {userId,lat,long}=data;
         const dataObject={
             userId:userId,
