@@ -13,10 +13,10 @@ const Tracking = sequelize.define('Tracking', {
     },
     lat:{
        
-        type: DataTypes.FLOAT(10,6)
+        type: DataTypes.STRING(100)
     },
     long:{
-        type: DataTypes.FLOAT(10,6)
+        type: DataTypes.STRING(100)
     },
 });
 
