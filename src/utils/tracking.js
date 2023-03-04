@@ -16,7 +16,7 @@ module.exports = {
                 //if not create
                 trackingData= await TrackingModel.create(data);
             }
-            return data;
+            return trackingData;
         } catch (err) {
             return err;
         }
