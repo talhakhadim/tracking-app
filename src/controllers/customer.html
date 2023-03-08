@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Invoice Update Message</title>
+	<style>
+		.message {
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			padding: 20px;
+			background-color: #2ecc71;
+			color: white;
+			font-size: 24px;
+			border-radius: 10px;
+			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+			opacity: 0;
+			transition: opacity 0.3s ease-in-out;
+			z-index: 9999;
+		}
+
+		.message.show {
+			opacity: 1;
+		}
+
+		.message.animate {
+			animation: message-animation 1s ease-in-out;
+		}
+
+		@keyframes message-animation {
+			0% {
+				transform: translate(-50%, -100%);
+			}
+			50% {
+				transform: translate(-50%, -50%);
+			}
+			100% {
+				transform: translate(-50%, -100%);
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="message" id="invoice-update-message">
+		Invoice update, Thanks...
+	</div>
+	<script>
+		window.addEventListener('load', function() {
+			var message = document.getElementById('invoice-update-message');
+			message.classList.add('show');
+             const currentUrl = window.location.href;
+		     const segments = currentUrl.split('/');
+             const lastSegment = segments.pop();
+            fetch(`http://192.168.1.112:5000/invoice/customer/acepted/${lastSegment}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+			setTimeout(function() {
+				message.classList.add('animate');
+			}, 3000);
+		});
+	</script>
+</body>
+</html>
