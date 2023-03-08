@@ -22,6 +22,10 @@ const invoiceqr = sequelize.define('invoiceqr', {
     uniqueKey: {
         type: DataTypes.STRING,
     },
+    verification: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
     status: {
         type: DataTypes.STRING,
     }
