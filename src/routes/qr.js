@@ -3,7 +3,7 @@ const qr = require('../controllers/qr');
 
 router.post('/qr', qr.createInvoice);
 // router.get('/customer/acepted/:id', qr.customerAcept);
-// router.get('/customer/active/:id', qr.scanByCustomer);
+router.get('/image/:id', qr.returnImage);
 router.get('/rejected/:id', qr.rejected);
 router.post('/report/', qr.avgTime);
 router.get('/active/:id', qr.sendingInvoice);
