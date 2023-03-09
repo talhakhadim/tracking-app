@@ -1,4 +1,10 @@
-<!DOCTYPE html>
+
+
+
+const template = (data, type) => {
+    console.log(type)
+    let template = `
+       <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
@@ -117,21 +123,7 @@ main {
 <body>
   <header>
     <h1>Invoice Details</h1>
-    <script>
-        // Parse the query string
-        const params = new URLSearchParams(window.location.search);
-        console.log(params);
-         const details = JSON.stringify(details);
-        // Retrieve the data from the query string
-        // const invoiceId = params.get('invoiceId');
-        // const userId = params.get('userId');
-        // const generatedAt = params.get('generatedAt');
-      console.log(invoiceId, "  ",userId, "  ", generatedAt, "   " );
-        // // Update the HTML with the data
-        document.getElementById('invoiceId').innerHTML = details.nvoiceId;
-        document.getElementById('userId').innerHTML = details.serId;
-        document.getElementById('generatedAt').innerHTML =details.generatedAt;
-    </script>
+  
   </header>
   <main>
     <section class="invoice-details">
@@ -139,18 +131,137 @@ main {
       <table>
         <tr>
           <td>Invoice ID:</td>
-          <td id="invoiceId"></td>
+          <td >${data.invoiceId}</td>
         </tr>
         <tr>
           <td>User ID:</td>
-          <td id="userId"></td>
+          <td >${data.userId}</td>
         </tr>
         <tr>
           <td>Generated At:</td>
-          <td id="generatedAt"></td>
+          <td >${data.generatedAt}</td>
         </tr>
       </table>
     </section>
   </main>
 </body>
+</html>`;
+
+    let template2 = `
+   <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Animated Message</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+    * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: sans-serif;
+  background-color: #f5f5f5;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.message {
+  position: relative;
+  padding: 40px;
+  text-align: center;
+  background-color: #fff;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  animation: bounceInDown 1s ease;
+}
+
+.message h1 {
+  font-size: 3em;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.message p {
+  font-size: 1.5em;
+  margin-bottom: 30px;
+  color: #666;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  color: #fff;
+  background-color: #333;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #555;
+}
+
+@keyframes bounceInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  60% {
+    transform: translateY(20%);
+  }
+  80% {
+    transform: translateY(-10%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .message {
+    padding: 20px;
+  }
+  
+  .message h1 {
+    font-size: 2em;
+  }
+  
+  .message p {
+    font-size: 1em;
+  }
+  
+  .btn {
+    font-size: 1em;
+  }
+}
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="message">
+        <h1>Welcome!</h1>
+        <p>${data.message}.</p>
+        <a href="#" class="btn">Goto Website</a>
+      </div>
+    </div>
+  </body>
 </html>
+`;
+
+    if (type === "admin") {
+        return template2;
+    }
+    else {
+        return template;
+    }
+}
+module.exports = template;
