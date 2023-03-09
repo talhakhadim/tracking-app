@@ -27,7 +27,7 @@ module.exports = {
     const uniqueId = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
     const invoice = {
       invoiceId: req.body.invoiceId,
-      qrCode: `${req.body.invoiceId}_${uniqueId}_invoice.png`,
+      qrCode: `${baseUrl}/${req.body.invoiceId}_${uniqueId}_invoice.png`,
       userId: req.body.userId,
       uniqueKey: uniqueId,
       customerId: req.body.customerId,
