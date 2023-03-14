@@ -66,14 +66,15 @@ module.exports = {
                     userId: verify.userId,
                     generatedAt: new Date(verify.createdAt.toString()).toLocaleString('en-US', { timeZone: 'UTC', hour12: true }),
                 };
-                alert("uzama here is details", details);
-                return res.send(template(details, 'public'));
+                // alert("uzama here is details", details);
+                // return res.send(template(details, 'public'));
                 // return res.sendFile(__dirname + '/customer.html', { locals: { details } });
-                // return res.json({
-                //     status: true,
-                //     message: 'Invoice Fetched Successfully',
+                return res.json({
+                    status: true,
+                    message: 'Invoice Fetched Successfully',
+                    data: details
 
-                // })
+                })
             }
 
             const checkifAlredy = await customerverification.findOne({
@@ -91,16 +92,16 @@ module.exports = {
                 let details = {
                     message: 'Invoice Fetched Successfully, Timer is already started and email has been sent already to customer',
                 };
-                return res.send(template(details, 'admin'));
-                // return res.json({
-                //     status: true,
-                //     message: 'Invoice Fetched Successfully, Timer is already started and email has been sent already to customer',
-                //     data: {
-                //         invoiceId: verify.invoiceId,
-                //         userId: verify.userId,
-                //         generatedAt: new Date(verify.createdAt.toString()).toLocaleString('en-US', { timeZone: 'UTC', hour12: true }),
-                //     }
-                // })
+                // return res.send(template(details, 'admin'));
+                return res.json({
+                    status: true,
+                    message: 'Invoice Fetched Successfully, Timer is already started and email has been sent already to customer',
+                    data: {
+                        invoiceId: verify.invoiceId,
+                        userId: verify.userId,
+                        generatedAt: new Date(verify.createdAt.toString()).toLocaleString('en-US', { timeZone: 'UTC', hour12: true }),
+                    }
+                })
             }
             const uniqueId = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
             const invoice = {
@@ -140,16 +141,16 @@ module.exports = {
                     generatedAt: new Date(verify.createdAt.toString()).toLocaleString('en-US', { timeZone: 'UTC', hour12: true }),
                     message: 'Invoice Fetched Successfully, Timer has been started and email has been sent successfully',
                 };
-                return res.send(template(details, 'admin'));
-                // return res.json({
-                //     status: true,
-                //     message: 'Invoice Fetched Successfully, Timer has been started and email has been sent successfully',
-                //     data: {
-                //         invoiceId: verify.invoiceId,
-                //         userId: verify.userId,
-                //         generatedAt: new Date(verify.createdAt.toString()).toLocaleString('en-US', { timeZone: 'UTC', hour12: true }),
-                //     }
-                // })
+                // return res.send(template(details, 'admin'));
+                return res.json({
+                    status: true,
+                    message: 'Invoice Fetched Successfully, Timer has been started and email has been sent successfully',
+                    data: {
+                        invoiceId: verify.invoiceId,
+                        userId: verify.userId,
+                        generatedAt: new Date(verify.createdAt.toString()).toLocaleString('en-US', { timeZone: 'UTC', hour12: true }),
+                    }
+                })
             }
         } catch (error) {
             return res.json({ message: error.message });
@@ -177,17 +178,17 @@ module.exports = {
                     generatedAt: new Date(verify.createdAt.toString()).toLocaleString('en-US', { timeZone: 'UTC', hour12: true }),
                     // completed: new Date(verify.updatedAt.toString()).toLocaleString('en-US', { timeZone: 'UTC', hour12: true }),
                 };
-                return res.send(template(details, 'public'));
-                // return res.json({
-                //     status: true,
-                //     message: 'Invoice Fetched Successfully',
-                //     data: {
-                //         invoiceId: verify.invoiceId,
-                //         userId: verify.userId,
-                //         generatedAt: new Date(verify.createdAt.toString()).toLocaleString('en-US', { timeZone: 'UTC', hour12: true }),
-                //         // completed: new Date(verify.updatedAt.toString()).toLocaleString('en-US', { timeZone: 'UTC', hour12: true }),
-                //     }
-                // })
+                // return res.send(template(details, 'public'));
+                return res.json({
+                    status: true,
+                    message: 'Invoice Fetched Successfully',
+                    data: {
+                        invoiceId: verify.invoiceId,
+                        userId: verify.userId,
+                        generatedAt: new Date(verify.createdAt.toString()).toLocaleString('en-US', { timeZone: 'UTC', hour12: true }),
+                        // completed: new Date(verify.updatedAt.toString()).toLocaleString('en-US', { timeZone: 'UTC', hour12: true }),
+                    }
+                })
             }
             let already = await customerverification.findOne({
                 where: { qrcode: verify.qrCode },
@@ -214,11 +215,11 @@ module.exports = {
                     let details = {
                         message: 'Invoice Completed Successfully',
                     };
-                    return res.send(template(details, 'admin'));
-                    // return res.json({
-                    //     status: true,
-                    //     message: 'Invoice Completed Successfully',
-                    // })
+                    // return res.send(template(details, 'admin'));
+                    return res.json({
+                        status: true,
+                        message: 'Invoice Completed Successfully',
+                    })
                 }
             }
             await invoiceQr.update(
@@ -232,11 +233,11 @@ module.exports = {
             let details = {
                 message: `Invoice is already ${already.status}`,
             };
-            return res.send(template(details, 'admin'));
-            // return res.json({
-            //     status: false,
-            //     message: `You cannot complete this. Invoice is already ${already.status}`,
-            // })
+            // return res.send(template(details, 'admin'));
+            return res.json({
+                status: false,
+                message: `You cannot complete this. Invoice is already ${already.status}`,
+            })
         } catch (error) {
             return res.json({ message: error.message });
         }
@@ -386,7 +387,8 @@ module.exports = {
             fs.access(imagePath, fs.constants.F_OK, (err) => {
                 if (err) {
                     console.error('No file found');
-                    return res.send(template('', '404'));
+                    return res.json({ message: 'No file found' });
+                    // return res.send(template('', '404'));
                 } else {
                     console.log(imagePath);
                     return res.sendFile(imagePath);
